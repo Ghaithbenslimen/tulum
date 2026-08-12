@@ -4,6 +4,8 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
+  basePath: '/tulum',
+  assetPrefix: '/tulum',
 }
 
 module.exports = nextConfig
