@@ -1,20 +1,32 @@
-<<<<<<< HEAD
 'use client'
 
 import { useMemo, useState } from 'react'
-import { ArrowDown, Coffee, MapPin, Menu, Phone, Sparkles, X } from 'lucide-react'
+import {
+  ArrowDown,
+  Coffee,
+  MapPin,
+  Menu,
+  Phone,
+  Sparkles,
+  X,
+} from 'lucide-react'
 
 type Item = [string, number, string?]
+
 type MenuGroup = {
   title: string
   image: string
   items: Item[]
 }
+
 type Section = {
   id: string
   title: string
   items: Item[]
 }
+
+const LAT = 36.83659657992125
+const LNG = 11.095054432745828
 
 const imageFor = (id: string) => {
   const imageMap: Record<string, string> = {
@@ -55,6 +67,8 @@ const imageFor = (id: string) => {
 
     // Petit Déjeuner subgroup
     breakfast: '/tulum/brand/breakfast.jpg',
+
+    // Hero images
     FIRST: '/tulum/brand/tulum.jpg',
     SECOND: '/tulum/brand/TULUM2,.jpg',
   }
@@ -257,6 +271,7 @@ function groupItems(section: Section): MenuGroup[] {
 
       items.forEach((item) => {
         const index = remaining.indexOf(item)
+
         if (index !== -1) {
           remaining.splice(index, 1)
         }
@@ -358,8 +373,16 @@ const sections: Section[] = [
         16,
         'Fruits frais, fruits secs, crème chantilly, Ferrero ou Kinder Bueno',
       ],
-      ['Cocktail Provençal', 12, 'Pêche, banane, fruits des bois'],
-      ['Cocktail Exotique', 12, 'Pêche, ananas, kiwi'],
+      [
+        'Cocktail Provençal',
+        12,
+        'Pêche, banane, fruits des bois',
+      ],
+      [
+        'Cocktail Exotique',
+        12,
+        'Pêche, ananas, kiwi',
+      ],
       ['Cocktail Fruit', 10],
       ['Mojito', 7],
       ['Mojito Apple', 6.5],
@@ -377,13 +400,19 @@ const sections: Section[] = [
       ['Hot Nutella', 9],
       ['Hot Vanilla', 10],
       ['Hot Pink Lava', 10],
-      ['Hot Chocolat Italienne (crème chantilly)', 10],
+      [
+        'Hot Chocolat Italienne (crème chantilly)',
+        10,
+      ],
       ['Hot Drip Biscoff', 11],
       ['Hot Nutty Pistachio', 12],
       ['Thé Menthe', 4],
       ['Thé Amande', 5.5],
       ['Thé Pignon', 7.5],
-      ['Thé Tulum (noisette, pignon, amande)', 9],
+      [
+        'Thé Tulum (noisette, pignon, amande)',
+        9,
+      ],
       ['Ice Tea', 6],
       ['Ice Tea Peachy', 6],
       ['Ice Tea Strawberry', 6],
@@ -493,14 +522,16 @@ export default function Page() {
     () =>
       active === 'all'
         ? sections
-        : sections.filter((section) => section.id === active),
+        : sections.filter(
+            (section) => section.id === active
+          ),
     [active]
   )
 
   return (
     <main
       id="top"
-      className="min-h-screen overflow-hidden text-foreground"
+      className="min-h-screen overflow-x-hidden text-foreground"
     >
       <div
         className="ambient ambient-one"
@@ -512,7 +543,8 @@ export default function Page() {
         aria-hidden="true"
       />
 
-      <header className="relative z-10 mx-auto flex max-w-7xl items-center justify-between px-5 py-6 sm:px-8 lg:px-12">
+      {/* HEADER */}
+      <header className="relative z-20 mx-auto flex w-full max-w-7xl items-center justify-between px-4 py-4 sm:px-6 sm:py-5 lg:px-12 lg:py-6">
         <a
           href="#top"
           className="brand-mark"
@@ -525,7 +557,7 @@ export default function Page() {
         <nav
           className={`${
             mobileOpen ? 'flex' : 'hidden'
-          } absolute left-5 right-5 top-20 flex-col gap-4 rounded-2xl border border-border/70 bg-card/95 p-5 shadow-xl backdrop-blur-xl md:static md:flex md:flex-row md:border-0 md:bg-transparent md:p-0 md:shadow-none`}
+          } absolute left-4 right-4 top-[calc(100%+0.5rem)] flex-col gap-3 rounded-2xl border border-border/70 bg-card/95 p-4 shadow-xl backdrop-blur-xl sm:left-6 sm:right-6 md:static md:flex md:flex-row md:items-center md:gap-6 md:border-0 md:bg-transparent md:p-0 md:shadow-none md:backdrop-blur-none`}
         >
           <a
             className="nav-link"
@@ -546,8 +578,11 @@ export default function Page() {
 
         <button
           className="icon-button md:hidden"
-          onClick={() => setMobileOpen(!mobileOpen)}
+          onClick={() =>
+            setMobileOpen((value) => !value)
+          }
           aria-label="Menu"
+          aria-expanded={mobileOpen}
         >
           {mobileOpen ? (
             <X size={20} />
@@ -557,29 +592,34 @@ export default function Page() {
         </button>
       </header>
 
-      <section className="relative z-10 mx-auto grid max-w-7xl gap-8 px-5 pb-16 pt-12 sm:px-8 lg:grid-cols-[1.1fr_.9fr] lg:items-center lg:px-12 lg:pb-24">
-        <div>
+      {/* HERO */}
+      <section className="relative z-10 mx-auto grid w-full max-w-7xl grid-cols-1 gap-8 px-4 pb-14 pt-8 sm:px-6 sm:pb-16 sm:pt-10 md:gap-10 lg:grid-cols-[1.05fr_.95fr] lg:items-center lg:px-12 lg:pb-24 lg:pt-16">
+        <div className="min-w-0">
           <p className="eyebrow">
             <Sparkles size={15} />
             Tea house · restaurant
           </p>
 
-          <h1 className="display-title">
+          <h1 className="display-title max-w-2xl text-balance">
             Le menu <em>Tulum Plus</em>
           </h1>
 
-          <p className="hero-copy">
-            Découvrez nos cafés, boissons, plats et douceurs,
-            préparés pour accompagner vos meilleurs moments.
+          <p className="hero-copy mt-4 max-w-xl">
+            Découvrez nos cafés, boissons, plats et
+            douceurs, préparés pour accompagner vos
+            meilleurs moments.
           </p>
 
-          <a href="#menu" className="primary-button">
+          <a
+            href="#menu"
+            className="primary-button mt-6 inline-flex"
+          >
             Voir la carte
             <ArrowDown size={17} />
           </a>
         </div>
 
-        <div className="hero-collage">
+        <div className="hero-collage mx-auto w-full max-w-[620px]">
           <img
             className="hero-image hero-main"
             src={categoryImage('FIRST')}
@@ -594,6 +634,7 @@ export default function Page() {
 
           <div className="hero-stamp">
             <Coffee size={18} />
+
             <span>
               Tulum
               <br />
@@ -603,225 +644,297 @@ export default function Page() {
         </div>
       </section>
 
+      {/* MENU */}
       <section
         id="menu"
-        className="relative z-10 mx-auto max-w-7xl px-5 pb-24 sm:px-8 lg:px-12"
+        className="relative z-10 mx-auto w-full max-w-7xl px-4 pb-16 sm:px-6 sm:pb-20 lg:px-12 lg:pb-24"
       >
         <div className="section-heading">
-          <div>
-            <p className="eyebrow">Notre carte</p>
+          <div className="min-w-0">
+            <p className="eyebrow">
+              Notre carte
+            </p>
 
-            <h2 className="section-title">
+            <h2 className="section-title text-balance">
               Choisissez une <em>catégorie</em>
             </h2>
           </div>
         </div>
 
+        {/* CATEGORY CARDS */}
         <div
-          className="category-grid"
+          className="category-grid grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3 lg:gap-5"
           role="tablist"
           aria-label="Catégories du menu"
         >
           <button
             className={`category-card ${
-              active === 'all' ? 'is-active' : ''
+              active === 'all'
+                ? 'is-active'
+                : ''
             }`}
             onClick={() => setActive('all')}
           >
-            <span className="category-all-icon">✦</span>
+            <span className="category-all-icon">
+              ✦
+            </span>
 
-            <span>
+            <span className="min-w-0">
               <small>Tout voir</small>
               <strong>La carte</strong>
             </span>
           </button>
 
-          {categories.map(([id, label, tagline]) => (
-            <button
-              key={id}
-              className={`category-card ${
-                active === id ? 'is-active' : ''
-              }`}
-              onClick={() => setActive(id)}
-            >
-              <img
-                src={categoryImage(id)}
-                alt=""
-              />
+          {categories.map(
+            ([id, label, tagline]) => (
+              <button
+                key={id}
+                className={`category-card ${
+                  active === id
+                    ? 'is-active'
+                    : ''
+                }`}
+                onClick={() => setActive(id)}
+              >
+                <img
+                  src={categoryImage(id)}
+                  alt=""
+                  className="h-14 w-14 shrink-0 rounded-xl object-cover sm:h-16 sm:w-16 lg:h-[72px] lg:w-[72px]"
+                />
 
-              <span>
-                <small>{tagline}</small>
-                <strong>{label}</strong>
-              </span>
-            </button>
-          ))}
+                <span className="min-w-0">
+                  <small className="line-clamp-2">
+                    {tagline}
+                  </small>
+
+                  <strong className="break-words">
+                    {label}
+                  </strong>
+                </span>
+              </button>
+            )
+          )}
         </div>
 
-        {/* IMPORTANT:
-            flex column prevents one tall category from creating
-            a huge empty vertical gap before the next category.
+        {/* MENU SECTIONS
+            BLOCK layout is intentional.
+            It prevents CSS grid/flex row sizing from creating
+            huge vertical gaps between categories.
         */}
         <div
-          className="menu-sections"
+          className="menu-sections w-full"
           style={{
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '2rem',
+            display: 'block',
             width: '100%',
+            marginTop: '2rem',
           }}
         >
           {visible.map((section) => (
             <article
-              className="menu-section"
+              className="menu-section w-full min-w-0"
               key={section.id}
               id={section.id}
               style={{
+                display: 'block',
                 width: '100%',
-                margin: 0,
+                margin: '0 0 2rem 0',
               }}
             >
-              <div className="menu-section-head">
-                <div>
+              {/* SECTION HEADER */}
+              <div className="menu-section-head flex flex-col gap-5 sm:gap-6 md:flex-row md:items-center md:justify-between">
+                <div className="min-w-0">
                   <p className="eyebrow">
                     Tulum Plus
                   </p>
 
-                  <h3>{section.title}</h3>
+                  <h3 className="break-words">
+                    {section.title}
+                  </h3>
 
-                  <p>
-                    Préparé avec soin et servi avec le
-                    sourire.
+                  <p className="max-w-xl">
+                    Préparé avec soin et servi avec
+                    le sourire.
                   </p>
                 </div>
 
                 <img
                   src={categoryImage(section.id)}
                   alt=""
+                  className="h-24 w-24 shrink-0 rounded-2xl object-cover sm:h-28 sm:w-28 md:h-32 md:w-32"
                 />
               </div>
 
-              <div className="menu-groups">
-                {groupItems(section).map((group) => (
-                  <section
-                    className="menu-group"
-                    key={group.title}
-                  >
-                    <div
-                      className="menu-group-head"
+              {/* SUBGROUPS */}
+              <div
+                className="menu-groups w-full"
+                style={{
+                  display: 'block',
+                  width: '100%',
+                  marginTop: '1.5rem',
+                }}
+              >
+                {groupItems(section).map(
+                  (group) => (
+                    <section
+                      className="menu-group w-full min-w-0"
+                      key={group.title}
                       style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '0.9rem',
+                        display: 'block',
+                        width: '100%',
+                        margin: '0 0 1.5rem 0',
                       }}
                     >
-                      <img
-                        src={imageFor(group.image)}
-                        alt=""
+                      {/* SUBCATEGORY HEADER */}
+                      <div className="menu-group-head flex min-w-0 items-center gap-3 sm:gap-4">
+                        <img
+                          src={imageFor(
+                            group.image
+                          )}
+                          alt=""
+                          className="h-16 w-16 shrink-0 rounded-2xl object-cover shadow-[0_8px_20px_rgba(0,0,0,0.10)] sm:h-[72px] sm:w-[72px] lg:h-[76px] lg:w-[76px]"
+                        />
+
+                        <h4 className="min-w-0 break-words">
+                          {group.title}
+                        </h4>
+                      </div>
+
+                      {/* ITEMS */}
+                      <div
+                        className="menu-items w-full"
                         style={{
-                          width: '76px',
-                          height: '76px',
-                          minWidth: '76px',
-                          borderRadius: '18px',
-                          objectFit: 'cover',
                           display: 'block',
-                          boxShadow: '0 8px 20px rgba(0,0,0,0.10)',
+                          width: '100%',
+                          marginTop: '0.75rem',
                         }}
-                      />
+                      >
+                        {group.items.map(
+                          (
+                            [
+                              name,
+                              price,
+                              desc,
+                            ]
+                          ) => (
+                            <div
+                              className="menu-item flex min-w-0 items-start gap-2"
+                              key={name}
+                              style={{
+                                width:
+                                  '100%',
+                                minWidth:
+                                  0,
+                              }}
+                            >
+                              <div className="min-w-0 flex-1">
+                                <span className="block break-words">
+                                  {name}
+                                </span>
 
-                      <h4>{group.title}</h4>
-                    </div>
+                                {desc && (
+                                  <small className="mt-1 block break-words">
+                                    {desc}
+                                  </small>
+                                )}
+                              </div>
 
-                    <div className="menu-items">
-                      {group.items.map(
-                        ([name, price, desc]) => (
-                          <div
-                            className="menu-item"
-                            key={name}
-                          >
-                            <div>
-                              <span>{name}</span>
+                              <span className="dots mt-3 hidden min-w-[16px] flex-1 sm:block" />
 
-                              {desc && (
-                                <small>
-                                  {desc}
-                                </small>
-                              )}
+                              <strong className="shrink-0 whitespace-nowrap text-right">
+                                {price.toFixed(
+                                  1
+                                )}{' '}
+                                DT
+                              </strong>
                             </div>
-
-                            <span className="dots" />
-
-                            <strong>
-                              {price.toFixed(1)} DT
-                            </strong>
-                          </div>
-                        )
-                      )}
-                    </div>
-                  </section>
-                ))}
+                          )
+                        )}
+                      </div>
+                    </section>
+                  )
+                )}
               </div>
             </article>
           ))}
         </div>
       </section>
 
+      {/* FOOTER */}
       <footer
         id="visit"
         className="relative z-10 border-t border-border/60 bg-primary text-primary-foreground"
       >
-        <div className="mx-auto max-w-7xl px-5 py-10 sm:px-8 lg:px-12">
-          <div className="flex flex-col gap-8">
+        <div className="mx-auto w-full max-w-7xl px-4 py-8 sm:px-6 sm:py-10 lg:px-12">
+          <div className="flex flex-col gap-7 sm:gap-8">
+            {/* FOOTER TOP */}
             <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
               <div className="brand-mark brand-light">
-                <span className="brand-script">Tulum</span>
-                <span className="brand-plus">PLUS</span>
+                <span className="brand-script">
+                  Tulum
+                </span>
+
+                <span className="brand-plus">
+                  PLUS
+                </span>
               </div>
 
-              <ul className="flex flex-col items-center justify-center gap-5 text-sm text-primary-foreground/90 sm:flex-row sm:gap-10">
-                <li className="flex items-center gap-2.5">
-                  <span className="flex size-7 items-center justify-center rounded-full bg-primary-foreground text-primary">
-                    <Phone className="size-3.5" aria-hidden="true" />
+              <ul className="flex flex-col items-start gap-4 text-sm text-primary-foreground/90 sm:items-center sm:justify-center sm:gap-5 md:flex-row md:gap-8">
+                <li className="flex min-w-0 items-center gap-2.5">
+                  <span className="flex size-7 shrink-0 items-center justify-center rounded-full bg-primary-foreground text-primary">
+                    <Phone
+                      className="size-3.5"
+                      aria-hidden="true"
+                    />
                   </span>
+
                   <a
                     href="tel:+21626402402"
-                    className="transition-opacity hover:opacity-80"
+                    className="break-words transition-opacity hover:opacity-80"
                   >
                     +216 26 402 402
                   </a>
                 </li>
 
-                <li className="flex items-center gap-2.5 text-center">
-                  <span className="flex size-7 items-center justify-center rounded-full bg-primary-foreground text-primary">
-                    <MapPin className="size-3.5" aria-hidden="true" />
+                <li className="flex min-w-0 items-center gap-2.5">
+                  <span className="flex size-7 shrink-0 items-center justify-center rounded-full bg-primary-foreground text-primary">
+                    <MapPin
+                      className="size-3.5"
+                      aria-hidden="true"
+                    />
                   </span>
-                  <span>Rue environnement, Kélibia 8090</span>
+
+                  <span className="break-words">
+                    Rue environnement, Kélibia
+                    8090
+                  </span>
                 </li>
               </ul>
             </div>
 
+            {/* MAP */}
             <section
-              className="mt-2"
+              className="mt-1"
               aria-label="Localisation du café"
             >
-              <h2 className="mb-3 text-center font-display text-xs font-medium uppercase tracking-[0.35em] text-gold">
+              <h2 className="mb-3 text-center font-display text-[10px] font-medium uppercase tracking-[0.3em] text-gold sm:text-xs sm:tracking-[0.35em]">
                 Nous trouver
               </h2>
 
-              <div className="overflow-hidden rounded-2xl border border-white/10 shadow-lg">
+              <div className="overflow-hidden rounded-xl border border-white/10 shadow-lg sm:rounded-2xl">
                 <iframe
                   title="Emplacement de Tulum Plus sur la carte"
-                  src="https://maps.google.com/maps?q=36.83659657992125,11.095054432745828&z=16&output=embed"
+                  src={`https://maps.google.com/maps?q=${LAT},${LNG}&z=16&output=embed`}
                   width="100%"
                   height="320"
                   loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"
-                  className="block w-full grayscale-[0.2]"
+                  className="block h-[240px] w-full grayscale-[0.2] sm:h-[280px] md:h-[320px]"
                 />
               </div>
 
-              <p className="mt-3 text-center text-sm text-primary-foreground/80">
+              <p className="mt-3 text-center text-xs text-primary-foreground/80 sm:text-sm">
                 <a
-                  href="https://www.google.com/maps/search/?api=1&query=36.83659657992125,11.095054432745828"
+                  href={`https://www.google.com/maps/search/?api=1&query=${LAT},${LNG}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-gold underline-offset-4 transition-opacity hover:underline hover:opacity-90"
@@ -836,34 +949,3 @@ export default function Page() {
     </main>
   )
 }
-=======
-import { CategoryNav } from '@/components/category-nav'
-import { MenuSection } from '@/components/menu-section'
-import { MenuFooter } from '@/components/menu-footer'
-import { BrandLogo } from '@/components/brand-logo'
-import { menu } from '@/lib/menu-data'
-
-export default function Page() {
-  return (
-    <main className="mx-auto max-w-5xl px-5 pb-10 sm:px-8">
-      <header className="flex flex-col items-center pt-16 pb-8 text-center">
-        <BrandLogo />
-        <p className="mx-auto mt-6 max-w-md text-pretty text-sm text-foreground/60">
-          Notre carte — petit déjeuner, cafés, boissons, fast food, plats et desserts. Prix en dinar
-          tunisien.
-        </p>
-      </header>
-
-      <CategoryNav categories={menu} />
-
-      <div className="flex flex-col gap-16">
-        {menu.map((category) => (
-          <MenuSection key={category.id} category={category} />
-        ))}
-      </div>
-
-      <MenuFooter />
-    </main>
-  )
-}
->>>>>>> e9d76f039c9fcf132c36e487ee9aeb6107fbc07d
